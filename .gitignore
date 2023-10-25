@@ -1,7 +1,8 @@
 # Ignore system-specific files and directories
-.DS_Store          # macOS system file
-Thumbs.db          # Windows system file
 desktop.ini        # Windows system file
+Thumbs.db          # Windows system file
+.DS_Store          # macOS system file
+lost+found/        # Linux system file
 *.log              # Common runtime log files
 .swp               # Vim swap files
 *~                 # Backup files

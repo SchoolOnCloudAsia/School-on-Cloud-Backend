@@ -2,11 +2,11 @@
 
 ## Introduction to Test-Driven Development (TDD)
 
-## What is Test-Driven Development?
+### What is Test-Driven Development?
 
 •	Test-driven development (TDD) is a software development technique that emphasizes writing tests before writing the actual code.
 
-## Why TDD?
+### Why TDD?
 
 •	TDD helps ensure code quality.
 
@@ -18,23 +18,32 @@
 
 ## The TDD Process
 
-## The Three Phases of TDD
+### The Three Phases of TDD
 
 1.	Red: Write a failing test
+
 •	Start by writing a test that checks a specific functionality.
+
 •	Since you have not implemented the feature yet, the test should fail.
 
 2.	Green: Write the minimum code to pass the test
+
 •	Write the minimal code necessary to make the test pass.
+
 •	Avoid writing extra functionality at this stage.
 
 3.	Refactor: Improve the code
+
 •	Refactor the code to improve its structure, readability, and performance.
+
 •	Ensure all tests still pass.
 
 ## The TDD Cycle
+
 •	Repeatedly go through the three phases: Red, Green, and Refactor.
+
 •	The cycle helps you iteratively build and improve your code.
+
 Writing Good Tests
 Characteristics of Good Tests
 •	Isolated: Tests should not depend on external factors or earlier tests.

@@ -68,7 +68,7 @@
 
 ### Example: Implementing a Simple Calculator
 
-### 1. Red Phase: Write a failing test for addition.
+### 1. Red Phase: Write a failing addition test.
 ```
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -78,8 +78,8 @@ public class CalculatorTest {
     @Test
     public void testAddition() {
         Calculator calculator = new Calculator();
-        int result = calculator.add(2, 3);
-        assertEquals(5, result);
+        int result = calculator.add(3, 4);
+        assertEquals(7, result);
     }
 }
 ```
@@ -98,7 +98,7 @@ public class Calculator {
 
 ### Expanding Functionality
 
-### 1. Red Phase: Write a failing test for subtraction.
+### 1. Red Phase: Write a failing subtraction test.
 ```
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -108,8 +108,8 @@ public class CalculatorTest {
     @Test
     public void testSubtraction() {
         Calculator calculator = new Calculator();
-        int result = calculator.subtract(5, 2);
-        assertEquals(3, result);
+        int result = calculator.subtract(7, 3);
+        assertEquals(4, result);
     }
 }
 ```

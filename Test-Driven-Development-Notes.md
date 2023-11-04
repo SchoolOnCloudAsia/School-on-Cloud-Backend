@@ -19,7 +19,6 @@
 ## The TDD Process
 
 ### The Three Phases of TDD
-
 1.	**Red:** Write a failing test
 
 •	Start by writing a test that checks a specific functionality.

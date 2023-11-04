@@ -108,12 +108,12 @@ public class CalculatorTest {
     @Test
     public void testSubtraction() {
         Calculator calculator = new Calculator();
-        int result = calculator.subtract(7, 4);
+        int result = calculator.subtract(5, 2);
         assertEquals(3, result);
     }
 }
 ```
-### 2. Green Phase: Write minimal code to pass the subtraction test.
+### 2.	Green Phase: Write minimal code to pass the subtraction test.
 ```
 public class Calculator {
 
@@ -126,9 +126,9 @@ public class Calculator {
     }
 }
 ```
-### 3. Refactor Phase: Improve the code.
+### 3.	Refactor Phase: Improve the code.
 
-• At this stage, there is not much to refactor.  We can keep the code simple.
+•	No significant refactoring is needed.
 
 ## TDD Benefits
 

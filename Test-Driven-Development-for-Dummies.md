@@ -20,19 +20,19 @@
 
 ### The Three Phases of TDD
 
-1.	**Red:** Write a failing test
+### 1.	**Red:** Write a failing test
 
 •	Start by writing a test that checks a specific functionality.
 
 •	Since you have not implemented the feature yet, the test should fail.
 
-2.	**Green:** Write the minimum code to pass the test
+### 2.	**Green:** Write the minimum code to pass the test
 
 •	Write the minimal code necessary to make the test pass.
 
 •	Avoid writing extra functionality at this stage.
 
-3.	**Refactor:** Improve the code
+### 3.	**Refactor:** Improve the code
 
 •	Refactor the code to improve its structure, readability, and performance.
 
@@ -66,7 +66,7 @@
 
 ## TDD In-Action
 
-### Example: Implementing a Simple Calculator for Basic Arithmetic Operations
+### Example: Implementing a Simple Calculator in Java for Basic Arithmetic Operations
 
 ### 1. Red Phase: Write a failing addition test.
 ```

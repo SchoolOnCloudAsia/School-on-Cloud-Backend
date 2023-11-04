@@ -12,18 +12,24 @@
 •	It encourages a more iterative and focused development process.
 •	It helps easier code maintenance and refactoring.
 •	TDD can lead to better design and reduced debugging time.
-The TDD Process
-The Three Phases of TDD
+
+## The TDD Process
+
+## The Three Phases of TDD
+
 1.	Red: Write a failing test
 •	Start by writing a test that checks a specific functionality.
 •	Since you have not implemented the feature yet, the test should fail.
+
 2.	Green: Write the minimum code to pass the test
 •	Write the minimal code necessary to make the test pass.
 •	Avoid writing extra functionality at this stage.
+
 3.	Refactor: Improve the code
 •	Refactor the code to improve its structure, readability, and performance.
 •	Ensure all tests still pass.
-The TDD Cycle
+
+## The TDD Cycle
 •	Repeatedly go through the three phases: Red, Green, and Refactor.
 •	The cycle helps you iteratively build and improve your code.
 Writing Good Tests

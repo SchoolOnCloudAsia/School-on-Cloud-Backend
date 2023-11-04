@@ -66,7 +66,7 @@
 
 ## TDD In-Action
 
-### Example: Implementing a Simple Calculator
+### Example: Implementing a Simple Calculator for Basic Arithmetic Operations
 
 ### 1. Red Phase: Write a failing addition test.
 ```

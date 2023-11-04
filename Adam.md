@@ -1,9 +1,13 @@
 # Crash Course Lecture Notes on Test-Driven Development (TDD) for Dummies
 
 ## Introduction to Test-Driven Development (TDD)
-What is Test-Driven Development?
+
+## What is Test-Driven Development?
+
 •	Test-driven development (TDD) is a software development technique that emphasizes writing tests before writing the actual code.
-Why TDD?
+
+## Why TDD?
+
 •	TDD helps ensure code quality.
 •	It encourages a more iterative and focused development process.
 •	It helps easier code maintenance and refactoring.

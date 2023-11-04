@@ -108,8 +108,8 @@ public class CalculatorTest {
     @Test
     public void testSubtraction() {
         Calculator calculator = new Calculator();
-        int result = calculator.subtract(7, 3);
-        assertEquals(4, result);
+        int result = calculator.subtract(7, 4);
+        assertEquals(3, result);
     }
 }
 ```

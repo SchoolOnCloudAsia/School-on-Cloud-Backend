@@ -9,8 +9,11 @@
 ## Why TDD?
 
 •	TDD helps ensure code quality.
+
 •	It encourages a more iterative and focused development process.
+
 •	It helps easier code maintenance and refactoring.
+
 •	TDD can lead to better design and reduced debugging time.
 
 ## The TDD Process

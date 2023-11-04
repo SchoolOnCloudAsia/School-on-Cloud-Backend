@@ -66,7 +66,7 @@
 
 ## TDD In-Action
 
-### Example: Implementing a Simple-Calculator
+### Example: Implementing a Simple Calculator
 
 ### 1. Red Phase: Write a failing test for addition.
 ```
@@ -78,12 +78,12 @@ public class CalculatorTest {
     @Test
     public void testAddition() {
         Calculator calculator = new Calculator();
-        int result = calculator.add(3, 4);
-        assertEquals(7, result);
+        int result = calculator.add(2, 3);
+        assertEquals(5, result);
     }
 }
 ```
-### 2. Green Phase: Write minimal code to pass the addition test.
+### 2.	Green Phase: Write minimal code to pass the addition test.
 ```
 public class Calculator {
 
@@ -92,9 +92,9 @@ public class Calculator {
     }
 }
 ```
-### 3. Refactor Phase: Improve the code.
+### 3.	Refactor Phase: Improve the code.
 
-• At this stage, there is not much to refactor.  We can keep the code simple.
+•	At this stage, there is not much to refactor.  We can keep the code simple.
 
 ### Expanding Functionality
 

@@ -54,4 +54,7 @@ Writing Test Cases
 •	Find specific test cases to cover different scenarios.
 •	Use descriptive test names to clarify the test’s purpose.
 •	Include assertions to check expected outcomes.
-
+```
+def test_addition():
+    result = add(2, 3)
+    assert result == 5```

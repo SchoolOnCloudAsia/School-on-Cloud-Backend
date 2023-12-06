@@ -19,15 +19,16 @@ public class MainControllerTest {
 
     private MainController mainController;
 
+    // Setup method to initialize mocks and MainController
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this); // Initialize mocks
-        mainController = new MainController(userRepository); // Inject mock
+        MockitoAnnotations.openMocks(this);
+        mainController = new MainController(userRepository);
     }
 
+    // Test case for addNewUser method
     @Test
     public void testAddUsers() {
-        // Arrange
         User user1 = new User();
         user1.setName("User1");
         user1.setEmail("user1@example.com");
@@ -36,21 +37,21 @@ public class MainControllerTest {
         user2.setName("User2");
         user2.setEmail("user2@example.com");
 
+        // Mocking the save method of userRepository
         when(userRepository.save(user1)).thenReturn(user1);
         when(userRepository.save(user2)).thenReturn(user2);
 
-        // Act
         String response1 = mainController.addNewUser(user1.getName(), user1.getEmail());
         String response2 = mainController.addNewUser(user2.getName(), user2.getEmail());
 
-        // Assert
+        // Asserting that the responses are as expected
         assertEquals("Saved", response1);
         assertEquals("Saved", response2);
     }
 
+    // Test case for getAllUsers method
     @Test
     public void testGetUsers() {
-        // Arrange
         User user1 = new User();
         user1.setName("User1");
         user1.setEmail("user1@example.com");
@@ -60,25 +61,27 @@ public class MainControllerTest {
         user2.setEmail("user2@example.com");
 
         List<User> users = Arrays.asList(user1, user2);
-        when(userRepository.findAll()).thenReturn(users); // Mock behavior
 
-        // Act
+        // Mocking the findAll method of userRepository
+        when(userRepository.findAll()).thenReturn(users);
+
         Iterable<User> responseUsers = mainController.getAllUsers();
 
-        // Assert
+        // Asserting that the number of users retrieved is as expected
         assertEquals(users.size(), ((List<User>) responseUsers).size());
     }
 
+    // Test case for deleteUser method
     @Test
     public void testDeleteUser() {
-        // Arrange
         Integer id = 1;
-        doNothing().when(userRepository).deleteById(id); // Mock behavior
 
-        // Act
+        // Mocking the deleteById method of userRepository
+        doNothing().when(userRepository).deleteById(id);
+
         String response = mainController.deleteUser(id);
 
-        // Assert
+        // Asserting that the response is as expected
         assertEquals("Deleted", response);
     }
 }

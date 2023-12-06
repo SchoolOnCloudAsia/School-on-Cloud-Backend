@@ -13,6 +13,6 @@ class DemoApplicationTests {
         int b = 10;
         int expected = 17;
         int actual = a + b;
-        assertEquals(expected, actual, "5 + 10 should equal 15");
+        assertEquals(expected, actual, "5 + 10 should equal 17");
     }
 }

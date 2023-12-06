@@ -33,7 +33,6 @@ public class MainController {
     return userRepository.findById(Integer.parseInt(userID)).orElse(null);
   }
 
-
   // ...
 
   @DeleteMapping(path="/{userID}")

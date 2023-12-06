@@ -14,18 +14,18 @@ import static org.mockito.Mockito.when;
 
 public class MainControllerTest {
 
-    @Mock // This annotation is used to create a mock implementation of UserRepository
+    @Mock
     private UserRepository userRepository;
 
     private MainController mainController;
 
-    @BeforeEach // This annotation defines the method to be executed before each test
+    @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this); // Initializes objects annotated with @Mock
-        mainController = new MainController(userRepository); // Inject the mock into the MainController
+        MockitoAnnotations.openMocks(this); // Initialize mocks
+        mainController = new MainController(userRepository); // Inject mock
     }
 
-    @Test // This annotation indicates that the public void method to which it is attached can be run as a test case
+    @Test
     public void testAddUsers() {
         // Arrange
         User user1 = new User();
@@ -36,7 +36,6 @@ public class MainControllerTest {
         user2.setName("User2");
         user2.setEmail("user2@example.com");
 
-        // Define the behavior of the mock object
         when(userRepository.save(user1)).thenReturn(user1);
         when(userRepository.save(user2)).thenReturn(user2);
 
@@ -45,11 +44,11 @@ public class MainControllerTest {
         String response2 = mainController.addNewUser(user2.getName(), user2.getEmail());
 
         // Assert
-        assertEquals("Saved", response1); // Check if the method returns "Saved" for user1
-        assertEquals("Saved", response2); // Check if the method returns "Saved" for user2
+        assertEquals("Saved", response1);
+        assertEquals("Saved", response2);
     }
 
-    @Test // This annotation indicates that the public void method to which it is attached can be run as a test case
+    @Test
     public void testGetUsers() {
         // Arrange
         User user1 = new User();
@@ -61,25 +60,25 @@ public class MainControllerTest {
         user2.setEmail("user2@example.com");
 
         List<User> users = Arrays.asList(user1, user2);
-        when(userRepository.findAll()).thenReturn(users); // Define the behavior of the mock object
+        when(userRepository.findAll()).thenReturn(users); // Mock behavior
 
         // Act
-        Iterable<User> responseUsers = mainController.getAllUsers(); // Call the method to be tested
+        Iterable<User> responseUsers = mainController.getAllUsers();
 
         // Assert
-        assertEquals(users.size(), ((List<User>) responseUsers).size()); // Check if the method returns the correct number of users
+        assertEquals(users.size(), ((List<User>) responseUsers).size());
     }
 
-    @Test // This annotation indicates that the public void method to which it is attached can be run as a test case
+    @Test
     public void testDeleteUser() {
         // Arrange
         Integer id = 1;
-        doNothing().when(userRepository).deleteById(id); // Define the behavior of the mock object
+        doNothing().when(userRepository).deleteById(id); // Mock behavior
 
         // Act
-        String response = mainController.deleteUser(id); // Call the method to be tested
+        String response = mainController.deleteUser(id);
 
         // Assert
-        assertEquals("Deleted", response); // Check if the method returns "Deleted"
+        assertEquals("Deleted", response);
     }
 }

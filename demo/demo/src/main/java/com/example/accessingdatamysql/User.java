@@ -15,6 +15,12 @@ public class User {
 
   private String email;
 
+  private String variableV;
+
+  private String variableA;
+
+  private String variableK;
+
   public Integer getId() {
     return id;
   }
@@ -37,5 +43,29 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getVariableV() {
+    return variableV;
+  }
+
+  public void setVariableV(String variableV) {
+    this.variableV = variableV;
+  }
+
+  public String getVariableA() {
+    return variableA;
+  }
+
+  public void setVariableA(String variableA) {
+    this.variableA = variableA;
+  }
+
+  public String getVariableK() {
+    return variableK;
+  }
+
+  public void setVariableK(String variableK) {
+    this.variableK = variableK;
   }
 }

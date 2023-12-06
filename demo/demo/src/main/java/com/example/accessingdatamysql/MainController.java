@@ -1,38 +1,50 @@
 package com.example.accessingdatamysql;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @Controller
 @RequestMapping(path="/demo")
 public class MainController {
   private UserRepository userRepository;
 
-  // Dependency injection of UserRepository
   public MainController(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 
   // Endpoint to add a new user
   @PostMapping(path="/add")
-  public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam String email) {
+  public @ResponseBody String addNewUser (@RequestParam String userID, @RequestParam String v, @RequestParam String a, @RequestParam String k) {
     User n = new User();
-    n.setName(name);
-    n.setEmail(email);
+    n.setId(Integer.parseInt(userID));
+    n.setVariableV(v); // Assuming the User class has a setter method for variableV
+    n.setVariableA(a); // Assuming the User class has a setter method for variableA
+    n.setVariableK(k); // Assuming the User class has a setter method for variableK
     userRepository.save(n);
     return "Saved";
   }
 
-  // Endpoint to get all users
-  @GetMapping(path="/all")
-  public @ResponseBody Iterable<User> getAllUsers() {
-    return userRepository.findAll();
+  // Endpoint to get user details
+  @GetMapping(path="/{userID}")
+  public @ResponseBody User getUser(@PathVariable String userID) {
+    return userRepository.findById(Integer.parseInt(userID)).orElse(null);
   }
 
-  // Endpoint to delete a user by ID
-  @DeleteMapping(path="/{id}")
-  public @ResponseBody String deleteUser(@PathVariable Integer id) {
-    userRepository.deleteById(id);
+
+  // ...
+
+  @DeleteMapping(path="/{userID}")
+  public @ResponseBody String deleteUser(@PathVariable String userID) {
+    userRepository.deleteById(Integer.parseInt(userID));
     return "Deleted";
+  }
+
+  public List<User> getAllUsers() {
+    List<User> users = new ArrayList<>();
+    userRepository.findAll().forEach(users::add);
+    return users;
   }
 }

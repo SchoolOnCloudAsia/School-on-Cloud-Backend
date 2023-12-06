@@ -79,23 +79,23 @@ public void testGetAllUsers() {
     assertEquals(users.size(), ((List<User>) responseUsers).size());
     }
 
-// Test case for deleteUser method
+// Test case for deleteUser method for user2
 @Test
 public void testDeleteUser() {
-    User user1 = new User();
-    user1.setId(1);
-    user1.setVariableV("v1");
-    user1.setVariableA("a1");
-    user1.setVariableK("k1");
+    User user2 = new User();
+    user2.setId(2);
+    user2.setVariableV("v2");
+    user2.setVariableA("a2");
+    user2.setVariableK("k2");
 
-    when(userRepository.save(user1)).thenReturn(user1);
-    mainController.addNewUser(String.valueOf(user1.getId()), user1.getVariableV(), user1.getVariableA(), user1.getVariableK());
+    when(userRepository.save(user2)).thenReturn(user2);
+    mainController.addNewUser(String.valueOf(user2.getId()), user2.getVariableV(), user2.getVariableA(), user2.getVariableK());
 
-    when(userRepository.findById(user1.getId())).thenReturn(Optional.of(user1));
-    mainController.deleteUser(String.valueOf(user1.getId()));
+    when(userRepository.findById(user2.getId())).thenReturn(Optional.of(user2));
+    mainController.deleteUser(String.valueOf(user2.getId()));
 
-    when(userRepository.findById(user1.getId())).thenReturn(Optional.empty());
+    when(userRepository.findById(user2.getId())).thenReturn(Optional.empty());
 
-    assertEquals(Optional.empty(), userRepository.findById(user1.getId()));
+    assertEquals(Optional.empty(), userRepository.findById(user2.getId()));
     }
 }

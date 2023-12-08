@@ -4,17 +4,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.authentication.jaas.JaasAuthenticationProvider;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import java.util.ArrayList;
 
 @Configuration
-@EnableWebSecurity
 public class WebSecurityConfig extends AbstractHttpConfigurer<WebSecurityConfig, HttpSecurity> {
 
     private final UserRepository userRepository;
@@ -53,5 +52,18 @@ public class WebSecurityConfig extends AbstractHttpConfigurer<WebSecurityConfig,
         JaasAuthenticationProvider jwtAuthenticationProvider = new JaasAuthenticationProvider();
         http.authenticationProvider(jwtAuthenticationProvider)
             .httpBasic(AbstractHttpConfigurer::disable);
+    }
+
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .ldapAuthentication()
+            .userDnPatterns("uid={0},ou=people")
+            .groupSearchBase("ou=groups")
+            .contextSource()
+            .url("ldap://localhost:8389/dc=springframework,dc=org")
+            .and()
+            .passwordCompare()
+            .passwordEncoder(passwordEncoder())
+            .passwordAttribute("userPassword");
     }
 }

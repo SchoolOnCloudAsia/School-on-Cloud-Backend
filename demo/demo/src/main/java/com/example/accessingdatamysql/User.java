@@ -21,6 +21,8 @@ public class User {
 
   private String variableK;
 
+  private String password; // Added password field
+
   public Integer getId() {
     return id;
   }
@@ -67,5 +69,17 @@ public class User {
 
   public void setVariableK(String variableK) {
     this.variableK = variableK;
+  }
+
+  public String getPassword() { // Getter for password
+    return password;
+  }
+
+  public void setPassword(String password) { // Setter for password
+    this.password = password;
+  }
+
+  public String getUsername() {
+    return null;
   }
 }

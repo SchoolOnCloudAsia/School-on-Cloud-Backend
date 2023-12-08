@@ -17,12 +17,13 @@ public class MainController {
 
   // Endpoint to add a new user
   @PostMapping(path="/add")
-  public @ResponseBody String addNewUser (@RequestParam String userID, @RequestParam String v, @RequestParam String a, @RequestParam String k) {
+  public @ResponseBody String addNewUser (@RequestParam String userID, @RequestParam String v, @RequestParam String a, @RequestParam String k, @RequestParam String password) {
     User n = new User();
     n.setId(Integer.parseInt(userID));
     n.setVariableV(v); // Assuming the User class has a setter method for variableV
     n.setVariableA(a); // Assuming the User class has a setter method for variableA
     n.setVariableK(k); // Assuming the User class has a setter method for variableK
+    n.setPassword(password); // Set password
     userRepository.save(n);
     return "Saved";
   }

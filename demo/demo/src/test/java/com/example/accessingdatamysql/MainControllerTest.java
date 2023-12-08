@@ -39,8 +39,8 @@ public class MainControllerTest {
         when(userRepository.save(user1)).thenReturn(user1);
         when(userRepository.save(user2)).thenReturn(user2);
 
-        String response1 = mainController.addNewUser(String.valueOf(user1.getId()), user1.getVariableV(), user1.getVariableA(), user1.getVariableK());
-        String response2 = mainController.addNewUser(String.valueOf(user2.getId()), user2.getVariableV(), user2.getVariableA(), user2.getVariableK());
+        String response1 = mainController.addNewUser(String.valueOf(user1.getId()), user1.getVariableV(), user1.getVariableA(), user1.getVariableK(), "");
+        String response2 = mainController.addNewUser(String.valueOf(user2.getId()), user2.getVariableV(), user2.getVariableA(), user2.getVariableK(), "");
 
         assertEquals("Saved", response1);
         assertEquals("Saved", response2);

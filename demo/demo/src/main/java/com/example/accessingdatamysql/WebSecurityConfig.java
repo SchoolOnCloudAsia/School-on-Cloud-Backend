@@ -59,3 +59,17 @@ public class WebSecurityConfig {
             .passwordAttribute("userPassword");
     }
 }
+
+//@Configuration
+//public class WebSecurityConfig {
+
+//  @Bean
+//  public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+//    return http
+//      .authorizeRequests()
+//      .anyRequest().authenticated()
+//      .and()
+//      .formLogin(Customizer.withDefaults())
+//      .build();
+//  }
+//}

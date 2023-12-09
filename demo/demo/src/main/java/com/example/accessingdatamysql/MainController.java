@@ -2,11 +2,10 @@ package com.example.accessingdatamysql;
 
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(path="/demo")
 public class MainController {
   private UserRepository userRepository;

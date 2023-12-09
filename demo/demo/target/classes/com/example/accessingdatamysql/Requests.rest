@@ -1,0 +1,4 @@
+POST http://localhost:8080/demo/add
+Content-Type: application/x-www-form-urlencoded
+
+userID=testUser&v=value1&a=value2&k=value3&password=password

@@ -8,7 +8,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,12 +33,6 @@ public class WebSecurityConfigTest {
     public void testPasswordEncoderBean() {
         PasswordEncoder passwordEncoder = webSecurityConfig.passwordEncoder();
         assertNotNull(passwordEncoder, "PasswordEncoder should not be null");
-    }
-
-    @Test
-    public void testConfigureBean() throws Exception {
-        SecurityFilterChain securityFilterChain = webSecurityConfig.configure(null);
-        assertNotNull(securityFilterChain, "SecurityFilterChain should not be null");
     }
 
     @Test

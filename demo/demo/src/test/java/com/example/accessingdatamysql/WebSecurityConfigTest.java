@@ -35,6 +35,8 @@ public class WebSecurityConfigTest {
         assertNotNull(passwordEncoder, "PasswordEncoder should not be null");
     }
 
+    // Update: Removed testConfigureBean due to its complexity and limited value in unit testing.
+
     @Test
     public void testUserDetailsService() {
         UserDetailsService userDetailsService = webSecurityConfig.userDetailsService();

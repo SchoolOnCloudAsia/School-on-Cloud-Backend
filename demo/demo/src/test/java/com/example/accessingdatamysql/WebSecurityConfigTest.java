@@ -3,51 +3,59 @@ package com.example.accessingdatamysql;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class WebSecurityConfigTest {
-
-    @Mock
-    private UserRepository userRepository;
 
     @InjectMocks
     private WebSecurityConfig webSecurityConfig;
 
     @Test
-    public void testUserDetailsService() {
-        User user = new User();
-        user.setName("test");
-        user.setPassword("password");
-
-        when(userRepository.findByName("test")).thenReturn(user);
-
+    public void testUserDetailsServiceBean() {
         UserDetailsService userDetailsService = webSecurityConfig.userDetailsService();
-
-        assertNotNull(userDetailsService.loadUserByUsername("test"));
+        assertNotNull(userDetailsService, "UserDetailsService should not be null");
     }
 
     @Test
-    public void testAuthenticationProvider() {
-        DaoAuthenticationProvider authProvider = webSecurityConfig.authenticationProvider();
+    public void testAuthenticationProviderBean() {
+        DaoAuthenticationProvider authenticationProvider = webSecurityConfig.authenticationProvider();
+        assertNotNull(authenticationProvider, "DaoAuthenticationProvider should not be null");
+    }
 
-        assertNotNull(authProvider);
+    @Test
+    public void testPasswordEncoderBean() {
+        PasswordEncoder passwordEncoder = webSecurityConfig.passwordEncoder();
+        assertNotNull(passwordEncoder, "PasswordEncoder should not be null");
+    }
+
+    @Test
+    public void testConfigureBean() throws Exception {
+        SecurityFilterChain securityFilterChain = webSecurityConfig.configure(null);
+        assertNotNull(securityFilterChain, "SecurityFilterChain should not be null");
+    }
+
+    @Test
+    public void testUserDetailsService() {
+        UserDetailsService userDetailsService = webSecurityConfig.userDetailsService();
+        UserDetails userDetails = userDetailsService.loadUserByUsername("user");
+        assertNotNull(userDetails, "UserDetails should not be null");
+        assertEquals("user", userDetails.getUsername(), "Username should be 'user'");
+        assertTrue(userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER")), "User should have 'ROLE_USER' authority");
     }
 
     @Test
     public void testPasswordEncoder() {
         PasswordEncoder passwordEncoder = webSecurityConfig.passwordEncoder();
-
-        assertNotNull(passwordEncoder);
-        assertTrue(passwordEncoder instanceof BCryptPasswordEncoder);
+        String encodedPassword = passwordEncoder.encode("password");
+        assertNotNull(encodedPassword, "Encoded password should not be null");
+        assertTrue(passwordEncoder.matches("password", encodedPassword), "Password should match the encoded password");
     }
 }

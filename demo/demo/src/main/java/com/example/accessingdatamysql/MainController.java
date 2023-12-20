@@ -33,7 +33,7 @@ public class MainController {
     return userRepository.findById(Integer.parseInt(userID)).orElse(null);
   }
 
-  // ...
+  // @DeleteMapping annotation is used to map HTTP DELETE requests onto specific handler methods.
 
   @DeleteMapping(path="/{userID}")
   public @ResponseBody String deleteUser(@PathVariable String userID) {

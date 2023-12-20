@@ -6,6 +6,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
   User findByName(String name); // Method to find a user by name
 
-User findByUsername(String username);
+Optional<User> findById(Long id);
 
 }

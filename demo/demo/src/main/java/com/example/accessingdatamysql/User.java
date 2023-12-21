@@ -88,8 +88,4 @@ public Integer getId() {
   public String getUsername() {
     return null;
   }
-
-public static Object withDefaultPasswordEncoder() {
-    return null;
-}
 }

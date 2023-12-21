@@ -8,11 +8,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeEach;
 
 @ExtendWith(MockitoExtension.class)
 public class WebSecurityConfigTest {
@@ -40,21 +37,14 @@ public class WebSecurityConfigTest {
 
     // Update: Removed testConfigureBean due to its complexity and limited value in unit testing.
 
-@BeforeEach
-public void setup() {
-    UserDetailsService userDetailsService; // Declare the userDetailsService variable
-
-    UserDetails user = ((Object) User.withDefaultPasswordEncoder())
-        .username("user")
-        .password("password")
-        .roles("USER")
-        .build();
-
-    InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
-    userDetailsManager.createUser(user);
-
-    userDetailsService = userDetailsManager; // Assign the value of userDetailsManager to userDetailsService
-}
+    @Test
+    public void testUserDetailsService() {
+        UserDetailsService userDetailsService = webSecurityConfig.userDetailsService();
+        UserDetails userDetails = userDetailsService.loadUserByUsername("user");
+        assertNotNull(userDetails, "UserDetails should not be null");
+        assertEquals("user", userDetails.getUsername(), "Username should be 'user'");
+        assertTrue(userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER")), "User should have 'ROLE_USER' authority");
+    }
 
     @Test
     public void testPasswordEncoder() {

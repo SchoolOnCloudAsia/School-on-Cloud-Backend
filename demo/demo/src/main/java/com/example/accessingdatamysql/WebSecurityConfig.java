@@ -21,7 +21,7 @@ public class WebSecurityConfig {
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User
-                .withUsername("testUser") // changed from "user" to "testUser"
+                .withUsername("user")
                 .password(passwordEncoder().encode("password"))
                 .roles("USER")
                 .build());

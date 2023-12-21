@@ -1,5 +1,6 @@
 package com.example.accessingdatamysql;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,18 @@ public class UserApiTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @BeforeEach
+    public void setup() {
+    restTemplate.postForEntity("/demo/add", new User("testUser", "password"), String.class);
+}
+
     @Test
     @Order(1)
     public void testUserCanCreateAccount() {
-        TestRestTemplate restTemplateWithAuth = restTemplate.withBasicAuth("user", "password");
+        TestRestTemplate restTemplateWithAuth = restTemplate.withBasicAuth("testUser", "password");
         ResponseEntity<String> response = restTemplateWithAuth.postForEntity("/demo/add", new User("testUser", "password"), String.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+}
 
     @Test
     @Order(2)
@@ -38,14 +44,16 @@ public class UserApiTest {
     @Test
     @Order(3)
     public void testUserCanLoginWithCredentials() {
-        ResponseEntity<String> response = restTemplate.postForEntity("/demo/login", new User("testUser", "password"), String.class);
+        TestRestTemplate restTemplateWithAuth = restTemplate.withBasicAuth("testUser", "password");
+        ResponseEntity<String> response = restTemplateWithAuth.postForEntity("/demo/login", null, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
     @Order(4)
     public void testUserCanSeeAccountDetails() {
-        ResponseEntity<User> response = restTemplate.getForEntity("/demo/account", User.class);
+        TestRestTemplate restTemplateWithAuth = restTemplate.withBasicAuth("testUser", "password");
+        ResponseEntity<User> response = restTemplateWithAuth.getForEntity("/demo/account", User.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         User user = response.getBody();
         assertThat(user).isNotNull();

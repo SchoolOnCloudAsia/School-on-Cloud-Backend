@@ -51,8 +51,9 @@ public class WebSecurityConfig {
                     })
             )
                 .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers("/demo/add").permitAll()
                     .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults());
-            return http.build();
-        }
+        return http.build();
     }
+}

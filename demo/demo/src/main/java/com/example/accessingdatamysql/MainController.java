@@ -27,6 +27,17 @@ public class MainController {
     return "Saved";
   }
 
+  // Endpoint to login a user
+  @PostMapping(path="/login")
+  public @ResponseBody String loginUser(@RequestParam String userID, @RequestParam String password) {
+      User user = userRepository.findById(Integer.parseInt(userID)).orElse(null);
+      if (user != null && user.getPassword().equals(password)) {
+          return "Logged in";
+      } else {
+          return "Unauthorized";
+      }
+  }
+
   // Endpoint to get user details
   @GetMapping(path="/{userID}")
   public @ResponseBody User getUser(@PathVariable String userID) {

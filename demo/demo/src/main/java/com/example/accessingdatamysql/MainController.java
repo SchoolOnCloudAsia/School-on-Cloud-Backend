@@ -17,7 +17,7 @@ public class MainController {
   // Endpoint to add a new user
   @PostMapping(path="/add")
   public @ResponseBody String addNewUser (@RequestParam String userID, @RequestParam String v, @RequestParam String a, @RequestParam String k, @RequestParam String password) {
-    User n = new User();
+    User n = new User(); // Create a new User object using the parameterized constructor
     n.setId(Integer.parseInt(userID));
     n.setVariableV(v); // Assuming the User class has a setter method for variableV
     n.setVariableA(a); // Assuming the User class has a setter method for variableA

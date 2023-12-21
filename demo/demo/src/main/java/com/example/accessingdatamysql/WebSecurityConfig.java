@@ -44,15 +44,9 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
-            .exceptionHandling(exceptionHandling ->
-                exceptionHandling
-                    .authenticationEntryPoint((request, response, authException) -> {
-                        response.sendError(jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED);
-                    })
-            )
-                .authorizeHttpRequests(authorize -> authorize
-                    .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults());
-            return http.build();
-        }
+            .authorizeHttpRequests(authorize -> authorize
+                .anyRequest().authenticated())
+            .formLogin(Customizer.withDefaults());
+        return http.build();
     }
+}

@@ -23,13 +23,7 @@ public class User {
 
   private String password; // Added password field
 
-  public User(String string, String string2) {
-}
-
-public User() {
-}
-
-public Integer getId() {
+  public Integer getId() {
     return id;
   }
 

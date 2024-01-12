@@ -4,24 +4,36 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
-@Entity // This tells Hibernate to make a table out of this class
+import java.util.Date;
+
+@Entity(name = "tb_example") // This tells Hibernate to make a table out of this class
 public class User {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Integer id;
 
-  private String name;
+  @Column(name = "DateTime")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date DateTime;
 
-  private String email;
+  @Column(name = "UserID")
+  private String UserID;
 
-  private String variableV;
+  @Column(name = "Password")
+  private String Password;
 
-  private String variableA;
+  @Column(name = "V")
+  private float V;
 
-  private String variableK;
+  @Column(name = "A")
+  private float A;
 
-  private String password; // Added password field
+  @Column(name = "K")
+  private float K;
 
   public Integer getId() {
     return id;
@@ -31,55 +43,51 @@ public class User {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public Date getDateTime() {
+    return DateTime;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setDateTime(Date DateTime) {
+    this.DateTime = DateTime;
   }
 
-  public String getEmail() {
-    return email;
+  public String getUserID() {
+    return UserID;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setUserID(String UserID) {
+    this.UserID = UserID;
   }
 
-  public String getVariableV() {
-    return variableV;
+  public String getPassword() {
+    return Password;
   }
 
-  public void setVariableV(String variableV) {
-    this.variableV = variableV;
+  public void setPassword(String Password) {
+    this.Password = Password;
   }
 
-  public String getVariableA() {
-    return variableA;
+  public float getV() {
+    return V;
   }
 
-  public void setVariableA(String variableA) {
-    this.variableA = variableA;
+  public void setV(float V) {
+    this.V = V;
   }
 
-  public String getVariableK() {
-    return variableK;
+  public float getA() {
+    return A;
   }
 
-  public void setVariableK(String variableK) {
-    this.variableK = variableK;
+  public void setA(float A) {
+    this.A = A;
   }
 
-  public String getPassword() { // Getter for password
-    return password;
+  public float getK() {
+    return K;
   }
 
-  public void setPassword(String password) { // Setter for password
-    this.password = password;
-  }
-
-  public String getUsername() {
-    return null;
+  public void setK(float K) {
+    this.K = K;
   }
 }

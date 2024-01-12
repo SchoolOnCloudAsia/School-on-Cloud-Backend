@@ -1,12 +1,14 @@
 package com.example.accessingdatamysql;
 
-import java.util.Optional; // Import the correct Optional class
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.lang.NonNull;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-  User findByName(String name); // Method to find a user by name
+  User findByUserID(String UserID); // Method to find a user by UserID
 
-  Optional<User> findById(Long id); // Fix the Optional type
+  @NonNull
+  Optional<User> findById(@NonNull Integer id); // Method to find a user by id
 
 }

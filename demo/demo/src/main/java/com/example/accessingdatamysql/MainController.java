@@ -1,49 +1,45 @@
 package com.example.accessingdatamysql;
 
-import java.util.ArrayList;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
-@RestController
-@RequestMapping(path="/demo")
+@Controller // This means that this class is a Controller
+@RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
 public class MainController {
+  @Autowired // This means to get the bean called userRepository
   private UserRepository userRepository;
 
-  public MainController(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
-
-  // Endpoint to add a new user
-  @PostMapping(path="/add")
-  public @ResponseBody String addNewUser (@RequestParam String userID, @RequestParam String v, @RequestParam String a, @RequestParam String k, @RequestParam String password) {
+  @PostMapping(path="/add") // Map ONLY POST Requests
+  public @ResponseBody String addNewUser (@RequestParam String UserID, @RequestParam float V, @RequestParam float A, @RequestParam float K, @RequestParam String Password) {
     User n = new User();
-    n.setId(Integer.parseInt(userID));
-    n.setVariableV(v); // Assuming the User class has a setter method for variableV
-    n.setVariableA(a); // Assuming the User class has a setter method for variableA
-    n.setVariableK(k); // Assuming the User class has a setter method for variableK
-    n.setPassword(password); // Set password
+    n.setUserID(UserID);
+    n.setV(V);
+    n.setA(A);
+    n.setK(K);
+    n.setPassword(Password);
     userRepository.save(n);
     return "Saved";
   }
 
-  // Endpoint to get user details
-  @GetMapping(path="/{userID}")
-  public @ResponseBody User getUser(@PathVariable String userID) {
-    return userRepository.findById(Integer.parseInt(userID)).orElse(null);
+  @GetMapping(path="/{UserID}")
+  public @ResponseBody User getUser(@PathVariable String UserID) {
+    return userRepository.findByUserID(UserID);
   }
 
-  // @DeleteMapping annotation is used to map HTTP DELETE requests onto specific handler methods.
-
-  @DeleteMapping(path="/{userID}")
-  public @ResponseBody String deleteUser(@PathVariable String userID) {
-    userRepository.deleteById(Integer.parseInt(userID));
-    return "Deleted";
+  @DeleteMapping(path="/{UserID}")
+  public @ResponseBody String deleteUser(@PathVariable String UserID) {
+    User user = userRepository.findByUserID(UserID);
+    if (user != null) {
+      userRepository.delete(user);
+      return "Deleted";
+    } else {
+      return "User not found";
+    }
   }
 
-  public List<User> getAllUsers() {
-    List<User> users = new ArrayList<>();
-    userRepository.findAll().forEach(users::add);
-    return users;
+  @GetMapping(path="/all")
+  public @ResponseBody Iterable<User> getAllUsers() {
+    return userRepository.findAll();
   }
 }

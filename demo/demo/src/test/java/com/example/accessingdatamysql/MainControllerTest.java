@@ -2,78 +2,86 @@ package com.example.accessingdatamysql;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+@SpringBootTest
 public class MainControllerTest {
+    @Mock
     private UserRepository userRepository;
+
+    @InjectMocks
     private MainController mainController;
-    private User user1;
-    private User user2;
+
+    private List<User> users;
+
     @BeforeEach
     public void setup() {
-        userRepository = Mockito.mock(UserRepository.class);
-        mainController = new MainController(userRepository);
+        MockitoAnnotations.openMocks(this);
 
-        user1 = new User();
-        user1.setId(1);
-        user1.setVariableV("v1");
-        user1.setVariableA("a1");
-        user1.setVariableK("k1");
+        User user1 = new User();
+        user1.setUserID("user1");
+        user1.setV(1.0f);
+        user1.setA(1.0f);
+        user1.setK(1.0f);
+        user1.setPassword("password1");
 
-        user2 = new User();
-        user2.setId(2);
-        user2.setVariableV("v2");
-        user2.setVariableA("a2");
-        user2.setVariableK("k2");
+        User user2 = new User();
+        user2.setUserID("user2");
+        user2.setV(2.0f);
+        user2.setA(2.0f);
+        user2.setK(2.0f);
+        user2.setPassword("password2");
 
-        Arrays.asList(user1, user2);
+        users = Arrays.asList(user1, user2);
     }
 
     @Test
     public void testAddNewUser() {
-        when(userRepository.save(user1)).thenReturn(user1);
-        when(userRepository.save(user2)).thenReturn(user2);
+        when(userRepository.save(any(User.class))).thenAnswer(i -> i.getArgument(0));
 
-        String response1 = mainController.addNewUser(String.valueOf(user1.getId()), user1.getVariableV(), user1.getVariableA(), user1.getVariableK(), "");
-        String response2 = mainController.addNewUser(String.valueOf(user2.getId()), user2.getVariableV(), user2.getVariableA(), user2.getVariableK(), "");
-
-        assertEquals("Saved", response1);
-        assertEquals("Saved", response2);
+        for (User user : users) {
+            String response = mainController.addNewUser(user.getUserID(), user.getV(), user.getA(), user.getK(), user.getPassword());
+            assertEquals("Saved", response);
+        }
     }
 
     @Test
     public void testGetUser() {
-        when(userRepository.findById(user1.getId())).thenReturn(java.util.Optional.ofNullable(user1));
-        when(userRepository.findById(user2.getId())).thenReturn(java.util.Optional.ofNullable(user2));
+        for (User user : users) {
+            when(userRepository.findByUserID(user.getUserID())).thenReturn(Optional.of(user));
 
-        User responseUser1 = mainController.getUser(String.valueOf(user1.getId()));
-        User responseUser2 = mainController.getUser(String.valueOf(user2.getId()));
+            Optional<User> responseUser = mainController.getUser(user.getUserID());
 
-        assertEquals(user1.getId(), responseUser1.getId());
-        assertEquals(user1.getVariableV(), responseUser1.getVariableV());
-        assertEquals(user1.getVariableA(), responseUser1.getVariableA());
-        assertEquals(user1.getVariableK(), responseUser1.getVariableK());
-
-        assertEquals(user2.getId(), responseUser2.getId());
-        assertEquals(user2.getVariableV(), responseUser2.getVariableV());
-        assertEquals(user2.getVariableA(), responseUser2.getVariableA());
-        assertEquals(user2.getVariableK(), responseUser2.getVariableK());
+            assertTrue(responseUser.isPresent());
+            assertEquals(user.getUserID(), responseUser.get().getUserID());
+            assertEquals(user.getV(), responseUser.get().getV());
+            assertEquals(user.getA(), responseUser.get().getA());
+            assertEquals(user.getK(), responseUser.get().getK());
+            assertEquals(user.getPassword(), responseUser.get().getPassword());
+        }
     }
 
     @Test
     public void testDeleteUser() {
-        doNothing().when(userRepository).deleteById(user1.getId());
-        doNothing().when(userRepository).deleteById(user2.getId());
+        for (User user : users) {
+            when(userRepository.findByUserID(user.getUserID())).thenReturn(Optional.of(user));
 
-        String response1 = mainController.deleteUser(String.valueOf(user1.getId()));
-        String response2 = mainController.deleteUser(String.valueOf(user2.getId()));
+            String response = mainController.deleteUser(user.getUserID());
 
-        assertEquals("Deleted", response1);
-        assertEquals("Deleted", response2);
+            assertEquals("Deleted", response);
+            verify(userRepository, times(1)).delete(user);
+        }
     }
 }

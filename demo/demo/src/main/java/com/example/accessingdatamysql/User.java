@@ -8,8 +8,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-import java.util.Date;
-
 @Entity(name = "tb_example") // This tells Hibernate to make a table out of this class
 public class User {
   @Id
@@ -18,22 +16,22 @@ public class User {
 
   @Column(name = "DateTime")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date DateTime;
+  private java.util.Date DateTime;
 
-  @Column(name = "UserID")
+  @Column(name = "UserID", length = 255)
   private String UserID;
 
-  @Column(name = "Password")
+  @Column(name = "Password", length = 255)
   private String Password;
-
-  @Column(name = "V")
-  private float V;
 
   @Column(name = "A")
   private float A;
 
   @Column(name = "K")
   private float K;
+
+  @Column(name = "V")
+  private float V;
 
   public Integer getId() {
     return id;
@@ -43,11 +41,11 @@ public class User {
     this.id = id;
   }
 
-  public Date getDateTime() {
+  public java.util.Date getDateTime() {
     return DateTime;
   }
 
-  public void setDateTime(Date DateTime) {
+  public void setDateTime(java.util.Date DateTime) {
     this.DateTime = DateTime;
   }
 
@@ -67,14 +65,6 @@ public class User {
     this.Password = Password;
   }
 
-  public float getV() {
-    return V;
-  }
-
-  public void setV(float V) {
-    this.V = V;
-  }
-
   public float getA() {
     return A;
   }
@@ -89,5 +79,13 @@ public class User {
 
   public void setK(float K) {
     this.K = K;
+  }
+
+  public float getV() {
+    return V;
+  }
+
+  public void setV(float V) {
+    this.V = V;
   }
 }

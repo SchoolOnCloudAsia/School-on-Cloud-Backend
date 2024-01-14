@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DemoApplicationTests {
 
     @Test
-    void testAddition() {
+    void addition() {
         int a = 7;
         int b = 10;
         int expected = 17;

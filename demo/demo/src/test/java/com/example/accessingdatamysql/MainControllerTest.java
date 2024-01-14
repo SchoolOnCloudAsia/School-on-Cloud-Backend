@@ -2,86 +2,105 @@ package com.example.accessingdatamysql;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 public class MainControllerTest {
-    @Mock
-    private UserRepository userRepository;
 
-    @InjectMocks
-    private MainController mainController;
+  @Autowired
+  private MockMvc mockMvc;
 
-    private List<User> users;
+  @MockBean
+  private UserRepository userRepository;
 
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
+  private User user1;
+  private User user2;
 
-        User user1 = new User();
-        user1.setUserID("user1");
-        user1.setV(1.0f);
-        user1.setA(1.0f);
-        user1.setK(1.0f);
-        user1.setPassword("password1");
+  @BeforeEach
+  public void setup() {
+    user1 = new User();
+    user1.setId(1);
+    user1.setDateTime(new Date());
+    user1.setUserID("user1");
+    user1.setPassword("password1");
+    user1.setA(1.0f);
+    user1.setK(1.0f);
+    user1.setV(1.0f);
 
-        User user2 = new User();
-        user2.setUserID("user2");
-        user2.setV(2.0f);
-        user2.setA(2.0f);
-        user2.setK(2.0f);
-        user2.setPassword("password2");
+    user2 = new User();
+    user2.setId(2);
+    user2.setDateTime(new Date());
+    user2.setUserID("user2");
+    user2.setPassword("password2");
+    user2.setA(2.0f);
+    user2.setK(2.0f);
+    user2.setV(2.0f);
+  }
 
-        users = Arrays.asList(user1, user2);
-    }
+  @Test
+  public void testAddNewUser() throws Exception {
+    when(userRepository.save(any(User.class))).thenReturn(user1);
 
-    @Test
-    public void testAddNewUser() {
-        when(userRepository.save(any(User.class))).thenAnswer(i -> i.getArgument(0));
+    mockMvc.perform(post("/demo/add")
+        .param("UserID", "user1")
+        .param("Password", "password1")
+        .param("A", "1.0")
+        .param("K", "1.0")
+        .param("V", "1.0")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string("Saved"));
+  }
 
-        for (User user : users) {
-            String response = mainController.addNewUser(user.getUserID(), user.getV(), user.getA(), user.getK(), user.getPassword());
-            assertEquals("Saved", response);
-        }
-    }
+  @Test
+  public void testGetAllUsers() throws Exception {
+    List<User> users = Arrays.asList(user1, user2);
+    when(userRepository.findAll()).thenReturn(users);
 
-    @Test
-    public void testGetUser() {
-        for (User user : users) {
-            when(userRepository.findByUserID(user.getUserID())).thenReturn(Optional.of(user));
+    mockMvc.perform(get("/demo/all")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].userID").value(user1.getUserID()))
+        .andExpect(jsonPath("$[0].password").value(user1.getPassword()))
+        .andExpect(jsonPath("$[1].userID").value(user2.getUserID()))
+        .andExpect(jsonPath("$[1].password").value(user2.getPassword()));
+  }
 
-            Optional<User> responseUser = mainController.getUser(user.getUserID());
+  @Test
+  public void testDeleteUser() throws Exception {
+    when(userRepository.findById(1)).thenReturn(Optional.of(user1));
 
-            assertTrue(responseUser.isPresent());
-            assertEquals(user.getUserID(), responseUser.get().getUserID());
-            assertEquals(user.getV(), responseUser.get().getV());
-            assertEquals(user.getA(), responseUser.get().getA());
-            assertEquals(user.getK(), responseUser.get().getK());
-            assertEquals(user.getPassword(), responseUser.get().getPassword());
-        }
-    }
+    mockMvc.perform(delete("/demo/delete")
+        .param("id", "1")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string("Deleted"));
+  }
 
-    @Test
-    public void testDeleteUser() {
-        for (User user : users) {
-            when(userRepository.findByUserID(user.getUserID())).thenReturn(Optional.of(user));
+  @Test
+  public void testDeleteUserNotFound() throws Exception {
+    when(userRepository.findById(1)).thenReturn(Optional.empty());
 
-            String response = mainController.deleteUser(user.getUserID());
-
-            assertEquals("Deleted", response);
-            verify(userRepository, times(1)).delete(user);
-        }
-    }
+    mockMvc.perform(delete("/demo/delete")
+        .param("id", "1")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string("User with id 1 does not exist"));
+  }
 }

@@ -19,10 +19,12 @@ public class MainController {
   private UserRepository userRepository;
 
   public MainController(UserRepository userRepository2) {
-    //TODO Auto-generated constructor stub
   }
 
-  @PostMapping(path="/add") // Map ONLY POST Requests
+  public MainController(com.github.database.rider.example.UserRepository userRepository2) {
+}
+
+@PostMapping(path="/add") // Map ONLY POST Requests
   public @ResponseBody String addNewUser (@RequestParam String UserID
       , @RequestParam String Password, @RequestParam float A, @RequestParam float K, @RequestParam float V) {
     // @ResponseBody means the returned String is the response, not a view name

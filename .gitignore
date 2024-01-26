@@ -98,3 +98,4 @@ package-lock.json
 
 # Ignore .gitignore itself
 .gitignore
+.DS_Store

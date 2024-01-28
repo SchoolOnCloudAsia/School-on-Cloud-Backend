@@ -1,26 +1,23 @@
 package com.example.accessingdatamysql;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-@Entity(name = "tb_example") // This tells Hibernate to make a table out of this class
+// The @Entity annotation indicates that this class is a JPA entity.
+// The name attribute of @Entity is used to refer to the entity in queries.
+@Entity(name = "tb_example")
 public class User {
+
+  // The @Id annotation specifies the primary key of the entity.
+  // The @GeneratedValue annotation provides for the specification of generation strategies for the values of primary keys.
   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Integer id;
-
-  @Column(name = "DateTime")
-  @Temporal(TemporalType.TIMESTAMP)
-  private java.util.Date DateTime;
-
   @Column(name = "UserID", length = 255)
   private String UserID;
 
+  // The @Column annotation is used to specify the mapped column for a persistent property or field.
   @Column(name = "Password", length = 255)
   private String Password;
 
@@ -33,22 +30,12 @@ public class User {
   @Column(name = "V")
   private float V;
 
-  public Integer getId() {
-    return id;
-  }
+  // The @Temporal annotation must be specified for persistent fields or properties of type java.util.Date and java.util.Calendar.
+  @Column(name = "DateTime")
+  @Temporal(TemporalType.TIMESTAMP)
+  private java.util.Date DateTime;
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public java.util.Date getDateTime() {
-    return DateTime;
-  }
-
-  public void setDateTime(java.util.Date DateTime) {
-    this.DateTime = DateTime;
-  }
-
+  // Getters and setters for the fields.
   public String getUserID() {
     return UserID;
   }
@@ -87,5 +74,13 @@ public class User {
 
   public void setV(float V) {
     this.V = V;
+  }
+
+  public java.util.Date getDateTime() {
+    return DateTime;
+  }
+
+  public void setDateTime(java.util.Date DateTime) {
+    this.DateTime = DateTime;
   }
 }

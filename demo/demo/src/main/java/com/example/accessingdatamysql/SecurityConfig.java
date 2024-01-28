@@ -20,6 +20,10 @@ public class SecurityConfig {
     @Autowired
     private UserRepository userRepository;
 
+    public SecurityConfig(UserRepository userRepository2, UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

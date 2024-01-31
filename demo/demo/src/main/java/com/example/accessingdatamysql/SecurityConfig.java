@@ -1,6 +1,5 @@
 package com.example.accessingdatamysql;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,11 +16,10 @@ import org.springframework.security.config.Customizer;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
     private UserRepository userRepository;
-
-    public SecurityConfig(UserRepository userRepository2, UserDetailsService userDetailsService,
+    public SecurityConfig(UserRepository userRepository, UserDetailsService userDetailsService,
             PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
     }
 
     @Bean

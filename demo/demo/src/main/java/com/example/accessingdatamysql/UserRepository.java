@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 // The type of entity and ID that it works with, User and String respectively, are specified in the generic parameters on CrudRepository.
 public interface UserRepository extends CrudRepository<User, String> {
   // Method to find a User entity by its UserID.
-  User findByUserID(String UserID);
+  User findByUserID(String userID);
 }

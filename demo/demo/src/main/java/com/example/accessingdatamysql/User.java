@@ -15,7 +15,7 @@ public class User {
   // The @GeneratedValue annotation provides for the specification of generation strategies for the values of primary keys.
   @Id
   @Column(name = "UserID", length = 255)
-  private String UserID;
+  private String userID;
 
   // The @Column annotation is used to specify the mapped column for a persistent property or field.
   @Column(name = "Password", length = 255)
@@ -37,11 +37,11 @@ public class User {
 
   // Getters and setters for the fields.
   public String getUserID() {
-    return UserID;
+    return userID;
   }
 
   public void setUserID(String UserID) {
-    this.UserID = UserID;
+    this.userID = UserID;
   }
 
   public String getPassword() {

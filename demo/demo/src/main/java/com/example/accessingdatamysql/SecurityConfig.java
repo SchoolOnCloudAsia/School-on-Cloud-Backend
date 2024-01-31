@@ -17,8 +17,7 @@ import org.springframework.security.config.Customizer;
 public class SecurityConfig {
 
     private UserRepository userRepository;
-    public SecurityConfig(UserRepository userRepository, UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder) {
+    public SecurityConfig(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -62,11 +62,11 @@ public class MainControllerTest {
         when(userRepository.findById(user2.getUserID())).thenReturn(Optional.of(user2));
         doNothing().when(userRepository).deleteById(user1.getUserID());
         doNothing().when(userRepository).deleteById(user2.getUserID());
-
-        String response1 = mainController.deleteUser(user1.getUserID());
-        String response2 = mainController.deleteUser(user2.getUserID());
-
-        assertEquals("Deleted", response1);
-        assertEquals("Deleted", response2);
+    
+        Optional<String> response1 = mainController.deleteUser(user1.getUserID());
+        Optional<String> response2 = mainController.deleteUser(user2.getUserID());
+    
+        assertEquals("Deleted", response1.orElse("Not Found"));
+        assertEquals("Deleted", response2.orElse("Not Found"));
     }
 }

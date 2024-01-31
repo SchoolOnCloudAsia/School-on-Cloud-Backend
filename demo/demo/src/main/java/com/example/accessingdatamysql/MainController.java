@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
@@ -46,21 +47,21 @@ public class MainController {
   }
 
   @DeleteMapping(path="/delete") // Map ONLY DELETE Requests
-  public @ResponseBody String deleteUser (@RequestParam String UserID) {
+  public @ResponseBody Optional<String> deleteUser (@RequestParam String UserID) {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the DELETE request
 
     // Null-safety check
     if (UserID == null) {
-      return "No UserID provided";
+      return Optional.of("No UserID provided");
     }
 
     // Check if user exists before deleting
     if (userRepository.findById(UserID).isPresent()) {
       userRepository.deleteById(UserID);
-      return "Deleted";
+      return Optional.of("Deleted");
     } else {
-      return "User with UserID " + UserID + " does not exist";
+      return Optional.of("User with UserID " + UserID + " does not exist");
     }
   }
 }

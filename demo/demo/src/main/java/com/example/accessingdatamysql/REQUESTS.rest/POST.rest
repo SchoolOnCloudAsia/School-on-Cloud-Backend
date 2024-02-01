@@ -1,4 +1,5 @@
 POST http://localhost:8080/demo/add
 Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer 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
 
 userID=testUser&v=value1&a=value2&k=value3&password=password

@@ -83,4 +83,8 @@ public class User {
   public void setDateTime(java.util.Date DateTime) {
     this.DateTime = DateTime;
   }
+
+  public static Object withDefaultPasswordEncoder() {
+    throw new UnsupportedOperationException("Unimplemented method 'withDefaultPasswordEncoder'");
+  }
 }

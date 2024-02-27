@@ -30,4 +30,3 @@ public class SQLiteDatasource {
     static class SqliteConfig {
     }
 }
-

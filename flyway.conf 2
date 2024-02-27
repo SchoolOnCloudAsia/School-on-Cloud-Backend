@@ -1,5 +1,0 @@
-flyway.url=jdbc:mysql://localhost:3306/db_example?allowPublicKeyRetrieval=true&useSSL=false
-flyway.user=root_beer_float
-flyway.password=root_beer_float_60071210S
-flyway.locations=filesystem:./sql_migrations
-flyway.baselineOnMigrate=true
